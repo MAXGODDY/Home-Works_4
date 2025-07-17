@@ -33,7 +33,7 @@ public class TestComponent : MonoBehaviour
 
         float currentTime = 0;
         Color startColor = image.color;
-        Color currentColor = Color.black;
+        Color currentColor;
 
         while (currentTime < deration)
         {
