@@ -5,7 +5,6 @@ public class MaterialOfTheRainbow : MonoBehaviour
 {
     [SerializeField] private Renderer _targetMaterial;
     [SerializeField] private float _coroutineDuration = 1f;
-    [SerializeField] private float _colorDelay = 0.5f;
     [SerializeField] private Color[] _targetColors = new Color[7];
 
     private int _index = 0;
@@ -13,35 +12,24 @@ public class MaterialOfTheRainbow : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(Rainbow(_targetMaterial, _coroutineDuration));
+        StartCoroutine(Rainbow(_targetMaterial.material, _coroutineDuration));
     }
-
-
-
-    private IEnumerator Rainbow(Renderer material, float duration)
+    private IEnumerator Rainbow(Material material, float duration)
     {
         while (true)
         {
-
-            yield return new WaitForSeconds(_colorDelay);
-
-
-            Color startColor = material.material.color;
+            Color startColor = material.color;
             Color targetColor = _targetColors[_index];
             float currentTime = 0f;
 
-
-
             while (currentTime < duration)
             {
-                material.material.color = Color.Lerp(startColor, targetColor, currentTime / duration);
+                material.color = Color.Lerp(startColor, targetColor, currentTime / duration);
                 currentTime += Time.deltaTime;
                 yield return null;
 
             }
-
-
-            material.material.color = targetColor;
+            material.color = targetColor;
             _index = (_index + 1) % _targetColors.Length;
 
         }
